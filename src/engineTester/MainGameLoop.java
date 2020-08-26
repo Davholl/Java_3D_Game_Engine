@@ -15,20 +15,23 @@ public class MainGameLoop {
 		Loader loader = new Loader();
 		Renderer renderer = new Renderer();
 		
-		//vertices de um retângulo de exemplo para testar
+		//vertices de um retangulo de exemplo para testar
+		//Os vertices dos triangulos são lidos no sentido antihorario
 		float[] vertices = {
-				//Triangulo de baixo
-				-0.5f, 0.5f, 0f,
-				-0.5f, -0.5f, 0f,
-				0.5f, -0.5f, 0f,
-				
-				//Triangulo de cima
-				0.5f, -0.5f, 0f,
-				0.5f, 0.5f, 0f,
-				-0.5f, 0.5f, 0f
+				//Os vertices totais do retângulo
+				-0.5f, 0.5f, 0f, //v0
+				-0.5f, -0.5f, 0f,//v1
+				 0.5f, -0.5f, 0f,  //v2
+				 0.5f, 0.5f, 0f //v3
 		};
 		
-		RawModel model = loader.loadToVAO(vertices);
+		//Especificando os vertices que vão compor os 2 triangulos
+		int[] indices = {
+				0, 1, 3,
+				3, 1 , 2
+		};
+		
+		RawModel model = loader.loadToVAO(vertices, indices);
 		
 		while(!Display.isCloseRequested()) {
 			renderer.prepare();
