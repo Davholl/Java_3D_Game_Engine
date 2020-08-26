@@ -6,6 +6,7 @@ import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.RawModel;
 import renderEngine.Renderer;
+import shaders.StaticShader;
 
 public class MainGameLoop {
 	
@@ -14,6 +15,7 @@ public class MainGameLoop {
 		
 		Loader loader = new Loader();
 		Renderer renderer = new Renderer();
+		StaticShader shader = new StaticShader();
 		
 		//vertices de um retangulo de exemplo para testar
 		//Os vertices dos triangulos são lidos no sentido antihorario
@@ -34,13 +36,18 @@ public class MainGameLoop {
 		RawModel model = loader.loadToVAO(vertices, indices);
 		
 		while(!Display.isCloseRequested()) {
-			renderer.prepare();
+			
 			//logic
+			
 			//render
+			renderer.prepare();
+			shader.start();
 			renderer.render(model);
+			shader.stop();
 			DisplayManager.updateDisplay();
 		}
 		
+		shader.cleanUp();
 		loader.cleanUp();
 		DisplayManager.closeDisplay();
 	}
