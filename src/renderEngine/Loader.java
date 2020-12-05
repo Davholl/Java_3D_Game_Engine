@@ -24,12 +24,13 @@ public class Loader {
 	private List<Integer> textures = new ArrayList<Integer>();
 	
 	//Carrega modelos 3d na memoria salvando dados posicionais em um VAO (Vertex Array Object)
-	public RawModel loadToVAO(float[] positions, float[] textureCoords, int[] indices) {
+	public RawModel loadToVAO(float[] positions, float[] textureCoords, float[] normals, int[] indices) {
 		
 		int vaoID = createVAO();
 		bindIndicesBuffer(indices);
 		storeDataInAttributeList(0,3, positions);
 		storeDataInAttributeList(1,2, textureCoords);
+		storeDataInAttributeList(2,3, normals);
 		unbindVAO();
 
 		//dividir o position por 3 para obter o numero de vertices porque cada vertice possui 3 coordenadas(x,y,z)

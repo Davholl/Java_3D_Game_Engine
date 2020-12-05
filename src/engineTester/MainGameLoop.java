@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import entities.Camera;
 import entities.Entity;
+import entities.Light;
 import models.RawModel;
 import models.TexturedModel;
 import renderEngine.DisplayManager;
@@ -27,13 +28,13 @@ public class MainGameLoop {
 		//Os vertices dos triangulos são lidos no sentido antihorario
 		
 		
-		RawModel model = OBJLoader.loadObjModel("stall", loader);
+		RawModel model = OBJLoader.loadObjModel("dragon", loader);
 		
 		ModelTexture texture = new ModelTexture(loader.loadTexture("stallTexture"));
 		TexturedModel texturedModel = new TexturedModel(model, texture);
 		
 		Entity entity = new Entity(texturedModel, new Vector3f(0f, 0f, -50f), 0, 0, 0, 1);
-		
+		Light light = new Light(new Vector3f(0,0,-20), new Vector3f(1,1,1));
 		Camera camera = new Camera();
 		
 		while(!Display.isCloseRequested()) {
@@ -44,6 +45,7 @@ public class MainGameLoop {
 			renderer.prepare();
 			camera.move();
 			shader.start();
+			shader.loadLight(light);
 			shader.loadViewMatrix(camera);
 			renderer.render(entity, shader);
 			shader.stop();
